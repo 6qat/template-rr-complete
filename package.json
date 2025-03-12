@@ -15,6 +15,7 @@
     "build-storybook": "storybook build"
   },
   "dependencies": {
+    "@react-router/fs-routes": "^7.3.0",
     "@react-router/node": "^7.3.0",
     "@react-router/serve": "^7.3.0",
     "isbot": "^5",
