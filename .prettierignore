@@ -1,0 +1,24 @@
+# Build output
+build/
+dist/
+.cache/
+.output/
+
+# Dependencies
+node_modules/
+
+# UI Components (as requested)
+app/components/ui/
+
+# Misc
+.DS_Store
+*.log
+coverage/
+.env
+.env.*
+!.env.example
+
+# Lockfiles
+pnpm-lock.yaml
+package-lock.json
+yarn.lock
