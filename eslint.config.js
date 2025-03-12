@@ -10,10 +10,16 @@ export default tseslint.config(
   },
   {
     extends: [js.configs.recommended, ...tseslint.configs.recommended],
-    files: ['**/*.{ts,tsx}'],
+    // files: ['**/*.{ts,tsx}'],
+    files: ['app/**/*.{js,mjs,cjs,ts,jsx,tsx}'],
     languageOptions: {
       ecmaVersion: 2020,
       globals: globals.browser,
+    },
+    settings: {
+      react: {
+        version: '19.0.0',
+      },
     },
     plugins: {
       'react-hooks': reactHooks,
@@ -25,6 +31,28 @@ export default tseslint.config(
         'off',
         { allowConstantExport: true },
       ],
+      'react/react-in-jsx-scope': 'off',
+      'no-unused-vars': [
+        'warn',
+        {
+          vars: 'all',
+          args: 'after-used',
+          ignoreRestSiblings: false,
+          varsIgnorePattern: '^_',
+          argsIgnorePattern: '^_',
+        },
+      ],
+      '@typescript-eslint/no-unused-vars': [
+        'warn',
+        {
+          vars: 'all',
+          args: 'after-used',
+          ignoreRestSiblings: false,
+          varsIgnorePattern: '^_',
+          argsIgnorePattern: '^_',
+        },
+      ],
+      'no-undef': 'warn',
     },
   }
 );
