@@ -8,6 +8,8 @@ pnpm-debug.log*
 lerna-debug.log*
 
 pnpm-lock.yaml
+.react-router
+build
 
 node_modules
 dist
