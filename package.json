@@ -6,7 +6,10 @@
   "scripts": {
     "dev": "react-router dev",
     "build": "tsc -b && react-router build",
+    "start": "react-router-serve ./build/server/index.js",
+    "typecheck": "react-router typegen && tsc",
     "lint": "eslint .",
+    "format": "prettier --write .",
     "preview": "vite preview",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build"
