@@ -14,9 +14,7 @@ export function Providers({ children }: { children: React.ReactNode }) {
   const router = useNavigate();
   return (
     <RouterProvider navigate={router} useHref={useHref}>
-      <ThemeProvider defaultTheme='system' storageKey='ui-theme'>
-        {children}
-      </ThemeProvider>
+      <ThemeProvider>{children}</ThemeProvider>
     </RouterProvider>
   );
 }

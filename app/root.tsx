@@ -3,6 +3,7 @@ import type { Route } from './+types/root';
 import { Links, Meta, Outlet, Scripts, ScrollRestoration } from 'react-router';
 
 import './app.css';
+import { Providers } from '~/contexts';
 
 export const links: Route.LinksFunction = () => [
   { rel: 'preconnect', href: 'https://fonts.googleapis.com' },
@@ -36,7 +37,11 @@ export function Layout({ children }: { children: React.ReactNode }) {
 }
 
 export default function App() {
-  return <Outlet />;
+  return (
+    <Providers>
+      <Outlet />
+    </Providers>
+  );
 }
 
 export function HydrateFallback() {

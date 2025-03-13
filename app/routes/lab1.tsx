@@ -1,6 +1,7 @@
 import { Outlet } from 'react-router';
 import type { Route } from './+types/lab1';
 import { Button } from '~/components/ui';
+import { useTheme } from '~/contexts/theme-provider';
 
 // https://reactrouter.com/how-to/file-route-conventions
 
@@ -32,10 +33,16 @@ export default function Lab1({
   params,
   matches,
 }: Route.ComponentProps) {
+  const { setTheme } = useTheme();
   return (
     <>
       <div className='text-5xl'>Lab1</div>
-      <Button intent='primary'>Button</Button>
+      <Button intent='primary' onPress={() => setTheme('light')}>
+        Light
+      </Button>
+      <Button intent='secondary' onPress={() => setTheme('dark')}>
+        Dark
+      </Button>
       <h1>Welcome to My Route with Props!</h1>
       <p>Loader Data: {JSON.stringify(loaderData)}</p>
       <p>Action Data: {JSON.stringify(actionData)}</p>
