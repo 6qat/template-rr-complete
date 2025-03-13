@@ -4,6 +4,9 @@ import { Links, Meta, Outlet, Scripts, ScrollRestoration } from 'react-router';
 
 import './app.css';
 import { Providers } from '~/contexts';
+import { Heading, SidebarProvider, SidebarInset } from '~/components/ui';
+import AppSidebar from '~/components/sidebar/app-sidebar';
+import AppSidebarNav from '~/components/sidebar/app-sidebar-nav';
 
 export const links: Route.LinksFunction = () => [
   { rel: 'preconnect', href: 'https://fonts.googleapis.com' },
@@ -20,7 +23,7 @@ export const links: Route.LinksFunction = () => [
 
 export function Layout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang='en'>
+    <html lang='en' suppressHydrationWarning>
       <head>
         <meta charSet='utf-8' />
         <meta name='viewport' content='width=device-width, initial-scale=1' />
@@ -39,7 +42,16 @@ export function Layout({ children }: { children: React.ReactNode }) {
 export default function App() {
   return (
     <Providers>
-      <Outlet />
+      <SidebarProvider>
+        <AppSidebar collapsible='dock' />
+        <SidebarInset>
+          <AppSidebarNav />
+          <div className='p-4 lg:p-6'>
+            <Heading>Basic</Heading>
+            <Outlet />
+          </div>
+        </SidebarInset>
+      </SidebarProvider>
     </Providers>
   );
 }
