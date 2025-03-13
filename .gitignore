@@ -11,6 +11,7 @@ pnpm-lock.yaml
 .react-router
 build
 *.tsbuildinfo
+coverage
 
 node_modules
 dist

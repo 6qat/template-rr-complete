@@ -22,6 +22,7 @@ export default defineWorkspace([
     ],
     test: {
       name: 'storybook',
+      // exclude: ['**/build/**', '**/.react-router/**'],
       browser: {
         enabled: true,
         headless: true,
