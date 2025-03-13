@@ -33,7 +33,7 @@ export default function Lab1({
 }: Route.ComponentProps) {
   return (
     <>
-      <div>Lab1</div>
+      <div className='text-5xl'>Lab1</div>
       <h1>Welcome to My Route with Props!</h1>
       <p>Loader Data: {JSON.stringify(loaderData)}</p>
       <p>Action Data: {JSON.stringify(actionData)}</p>

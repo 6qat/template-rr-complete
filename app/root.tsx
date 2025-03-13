@@ -2,6 +2,8 @@ import React from 'react';
 import type { Route } from './+types/root';
 import { Links, Meta, Outlet, Scripts, ScrollRestoration } from 'react-router';
 
+import './app.css';
+
 export const links: Route.LinksFunction = () => [
   { rel: 'preconnect', href: 'https://fonts.googleapis.com' },
   {
