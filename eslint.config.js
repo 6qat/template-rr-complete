@@ -14,7 +14,11 @@ export default tseslint.config(
     files: ['app/**/*.{js,mjs,cjs,ts,jsx,tsx}'],
     languageOptions: {
       ecmaVersion: 2020,
-      globals: globals.browser,
+      globals: {
+        ...globals.browser,
+        React: 'readonly',
+        JSX: 'readonly'
+      },
     },
     settings: {
       react: {

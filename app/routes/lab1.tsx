@@ -1,5 +1,6 @@
 import { Outlet } from 'react-router';
 import type { Route } from './+types/lab1';
+import { Button } from '~/components/ui';
 
 // https://reactrouter.com/how-to/file-route-conventions
 
@@ -34,6 +35,7 @@ export default function Lab1({
   return (
     <>
       <div className='text-5xl'>Lab1</div>
+      <Button intent='primary'>Button</Button>
       <h1>Welcome to My Route with Props!</h1>
       <p>Loader Data: {JSON.stringify(loaderData)}</p>
       <p>Action Data: {JSON.stringify(actionData)}</p>
