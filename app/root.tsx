@@ -43,7 +43,7 @@ export default function App() {
   return (
     <Providers>
       <SidebarProvider>
-        <AppSidebar collapsible='dock' />
+        <AppSidebar collapsible='dock' side='left' />
         <SidebarInset>
           <AppSidebarNav />
           <div className='p-4 lg:p-6'>

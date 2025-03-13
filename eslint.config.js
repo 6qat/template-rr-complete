@@ -6,7 +6,12 @@ import tseslint from 'typescript-eslint';
 
 export default tseslint.config(
   {
-    ignores: ['.react-router/**', 'build/**', 'convex/_generated/**'],
+    ignores: [
+      '.react-router/**',
+      'build/**',
+      'convex/_generated/**',
+      'app/components/ui/**',
+    ],
   },
   {
     extends: [js.configs.recommended, ...tseslint.configs.recommended],
@@ -17,7 +22,7 @@ export default tseslint.config(
       globals: {
         ...globals.browser,
         React: 'readonly',
-        JSX: 'readonly'
+        JSX: 'readonly',
       },
     },
     settings: {

@@ -2,7 +2,7 @@ import { Outlet } from 'react-router';
 import type { Route } from './+types/lab1';
 import { Button } from '~/components/ui';
 import { useTheme } from '~/contexts/theme-provider';
-
+import { useIsSSR } from 'react-aria';
 // https://reactrouter.com/how-to/file-route-conventions
 
 export async function loader({ params }: Route.LoaderArgs) {
@@ -34,6 +34,7 @@ export default function Lab1({
   matches,
 }: Route.ComponentProps) {
   const { setTheme } = useTheme();
+  const isSSR = useIsSSR();
   return (
     <>
       <div className='text-5xl'>Lab1</div>
@@ -43,6 +44,9 @@ export default function Lab1({
       <Button intent='secondary' onPress={() => setTheme('dark')}>
         Dark
       </Button>
+      {isSSR && (
+        <p className='text-3xl text-red-500'>Rendering on server (SSR)</p>
+      )}
       <h1>Welcome to My Route with Props!</h1>
       <p>Loader Data: {JSON.stringify(loaderData)}</p>
       <p>Action Data: {JSON.stringify(actionData)}</p>

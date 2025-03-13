@@ -1,106 +1,196 @@
-import {
+/* eslint-disable no-unused-vars */
+// websocket.context.tsx
+import React, {
   createContext,
   useContext,
   useEffect,
   useRef,
   useState,
+  useCallback,
   type ReactNode,
 } from 'react';
 
-type WebsocketContextType = {
-  messages: string[];
-  error: string | null;
+// Define the context type
+interface WebSocketContextType {
   isConnected: boolean;
+  errorMessage: string;
+  sendMessage: (message: string) => void;
+  addMessageListener: (listener: (message: string) => void) => void;
+  removeMessageListener: (listener: (message: string) => void) => void;
+}
 
-  sendMessage: ((_message: string) => Promise<void>) | null;
-};
+// Create the context
+const WebSocketContext = createContext<WebSocketContextType | undefined>(
+  undefined
+);
 
-const WebsocketContext = createContext<WebsocketContextType | null>(null);
-
-export const useWebsocket = () => {
-  const context = useContext(WebsocketContext);
-  if (!context) {
-    throw new Error('useWebsocket must be used within a WebsocketProvider');
-  }
-  return context;
-};
-
-type WebsocketProviderProps = {
-  children: ReactNode;
+// Props for the provider
+interface WebSocketProviderProps {
   url: string;
-};
+  children: ReactNode;
+}
 
-export const WebsocketProvider = ({
-  children,
+// WebSocket Provider component
+export const WebSocketProvider: React.FC<WebSocketProviderProps> = ({
   url,
-}: WebsocketProviderProps) => {
-  // Define state types
-  const [messages, setMessages] = useState<string[]>([]);
-  const [error, setError] = useState<string | null>(null);
-  const [isConnected, setIsConnected] = useState<boolean>(false);
-  const [sendMessage, setSendMessage] = useState<
-    ((_message: string) => Promise<void>) | null
-  >(null);
-
+  children,
+}) => {
+  // Ref to hold the WebSocket instance
   const wsRef = useRef<WebSocket | null>(null);
+  // Ref to hold the list of message listeners
+  const messageListenersRef = useRef<((message: string) => void)[]>([]);
+  // State for connection status
+  const [isConnected, setIsConnected] = useState(false);
 
+  const [errorMessage, setErrorMessage] = useState<string>('');
+
+  // Stable function to add a message listener
+  const addMessageListener = useCallback(
+    (listener: (message: string) => void) => {
+      messageListenersRef.current.push(listener);
+    },
+    []
+  );
+
+  // Stable function to remove a message listener
+  const removeMessageListener = useCallback(
+    (listener: (message: string) => void) => {
+      messageListenersRef.current = messageListenersRef.current.filter(
+        (l) => l !== listener
+      );
+    },
+    []
+  );
+
+  // Stable function to send a message
+  const sendMessage = useCallback((message: string) => {
+    if (wsRef.current && wsRef.current.readyState === WebSocket.OPEN) {
+      wsRef.current.send(message);
+    }
+  }, []);
+
+  // Effect to manage WebSocket connection
   useEffect(() => {
-    // if (isConnected) return;
-    // Create WebSocket connection
-    wsRef.current = new WebSocket(url);
+    const connect = () => {
+      const socket = new WebSocket(url);
+      wsRef.current = socket;
 
-    wsRef.current.onopen = () => {
-      console.log('Connected to WebSocket');
-      setIsConnected(true);
-    };
+      socket.onopen = () => {
+        console.log('WebSocket connected');
+        setIsConnected(true);
+        setErrorMessage(''); // Clear any previous error messages on successful connection
+      };
 
-    wsRef.current.onmessage = (event: MessageEvent) => {
-      setMessages((prevMessages) => [...prevMessages, event.data as string]);
-    };
+      socket.onmessage = (event) => {
+        const message = event.data;
+        // Call all registered listeners without updating state
+        messageListenersRef.current.forEach((listener) => listener(message));
+      };
 
-    wsRef.current.onclose = () => {
-      console.log('Disconnected from WebSocket');
-      setIsConnected(false);
-      // Reconnect after 5 seconds
-      setTimeout(() => {
-        // Reconnect logic can be implemented here
-      }, 5000);
-    };
+      socket.onclose = (event: CloseEvent) => {
+        console.log('WebSocket disconnected', event);
+        setIsConnected(false);
 
-    wsRef.current.onerror = (event: Event) => {
-      console.log('Error:', event);
-      setError('WebSocket connection error');
-      setIsConnected(false);
-    };
-
-    // Set up send message function
-    setSendMessage(() => (message: string): Promise<void> => {
-      return new Promise((resolve, reject) => {
-        if (wsRef.current && wsRef.current.readyState === WebSocket.OPEN) {
-          wsRef.current.send(message);
-          resolve();
-        } else {
-          const errorMsg = 'Socket is not open';
-          console.log(errorMsg);
-          reject(new Error(errorMsg));
+        // Check if the close was clean or due to an error
+        if (!event.wasClean) {
+          setErrorMessage(
+            `Connection error: Code ${event.code} - ${event.reason || 'Unknown error'}`
+          );
         }
-      });
-    });
 
-    // Cleanup on unmount
+        // Reconnect after a delay
+        setTimeout(connect, 1000);
+      };
+
+      socket.onerror = (event: Event) => {
+        console.error('WebSocket error:', event);
+        // Try to extract more detailed error information
+        // In some browsers, this might be an ErrorEvent
+        const errorEvent = event as ErrorEvent;
+        if (errorEvent.message) {
+          setErrorMessage(errorEvent.message);
+        } else {
+          setErrorMessage('WebSocket connection error occurred');
+        }
+      };
+    };
+
+    connect();
+
+    // Cleanup on unmount or URL change
     return () => {
       if (wsRef.current) {
-        console.log(isConnected);
         wsRef.current.close();
       }
     };
   }, [url]);
 
+  // Context value
+  const value: WebSocketContextType = {
+    isConnected,
+    errorMessage,
+    sendMessage,
+    addMessageListener,
+    removeMessageListener,
+  };
+
   return (
-    <WebsocketContext.Provider
-      value={{ messages, error, isConnected, sendMessage }}
-    >
+    <WebSocketContext.Provider value={value}>
       {children}
-    </WebsocketContext.Provider>
+    </WebSocketContext.Provider>
+  );
+};
+
+// Custom hook to access the WebSocket context
+export const useWebSocket = (): WebSocketContextType => {
+  const context = useContext(WebSocketContext);
+  if (context === undefined) {
+    throw new Error('useWebSocket must be used within a WebSocketProvider');
+  }
+  return context;
+};
+
+const ChatComponent = () => {
+  const {
+    isConnected,
+    errorMessage,
+    sendMessage,
+    addMessageListener,
+    removeMessageListener,
+  } = useWebSocket();
+  const [messages, setMessages] = useState<string[]>([]);
+
+  useEffect(() => {
+    // Define the message handler
+    const handleMessage = (message: string) => {
+      setMessages((prev) => [...prev, message]); // Update local state
+    };
+
+    // Subscribe to messages
+    addMessageListener(handleMessage);
+
+    // Cleanup: remove the listener on unmount
+    return () => {
+      removeMessageListener(handleMessage);
+    };
+  }, [addMessageListener, removeMessageListener]); // Stable dependencies
+
+  const handleSend = () => {
+    sendMessage('Hello, WebSocket!');
+  };
+
+  return (
+    <div>
+      <p>Connected: {isConnected ? 'Yes' : 'No'}</p>
+      {errorMessage && <p className='text-red-500'>{errorMessage}</p>}
+      <button onClick={handleSend} disabled={!isConnected}>
+        Send Message
+      </button>
+      <ul>
+        {messages.map((msg, index) => (
+          <li key={index}>{msg}</li>
+        ))}
+      </ul>
+    </div>
   );
 };
