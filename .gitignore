@@ -12,6 +12,7 @@ pnpm-lock.yaml
 build
 *.tsbuildinfo
 coverage
+bun.lock
 
 node_modules
 dist
