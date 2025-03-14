@@ -7,22 +7,12 @@
   ],
   "compilerOptions": {
     "target": "ES2022",
-    "types": [
-      "node",
-      "vite/client"
-    ],
+    "types": ["node", "vite/client"],
     "useDefineForClassFields": true,
-    "lib": [
-      "ES2022",
-      "DOM",
-      "DOM.Iterable"
-    ],
+    "lib": ["ES2022", "DOM", "DOM.Iterable"],
     "module": "ES2022",
     "skipLibCheck": true,
-    "rootDirs": [
-      ".",
-      "./.react-router/types"
-    ],
+    "rootDirs": [".", "./.react-router/types"],
     "baseUrl": ".",
     "moduleResolution": "bundler",
     "allowImportingTsExtensions": true,
@@ -31,12 +21,8 @@
     "noEmit": true,
     "jsx": "react-jsx",
     "paths": {
-      "~/*": [
-        "./app/*"
-      ],
-      "ui": [
-        "./components/ui/index.ts"
-      ]
+      "~/*": ["./app/*"],
+      "ui": ["./components/ui/index.ts"]
     },
     "strict": true,
     "noFallthroughCasesInSwitch": true,

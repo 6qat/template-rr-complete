@@ -14,7 +14,10 @@
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
     "test": "vitest",
-    "coverage": "vitest run --coverage"
+    "coverage": "vitest run --coverage",
+    "spa-start": "npm run build && python ./spa_serve.py",
+    "spa-docker-build": "npm run build && docker build -t app:latest -f Dockerfile.spa .",
+    "spa-docker-start": "docker run --rm -p 8080:80 --name app app:latest"
   },
   "dependencies": {
     "@react-router/fs-routes": "^7.3.0",

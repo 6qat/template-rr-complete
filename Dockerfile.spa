@@ -1,0 +1,18 @@
+# Dockerfile for the SPA (Client, with no SSR)
+# Use the official lightweight Nginx image
+FROM nginx:alpine
+
+# Set the working directory
+WORKDIR /usr/share/nginx/html
+
+# Copy the built SPA files from build/client
+COPY build/client /usr/share/nginx/html
+
+# Copy Nginx configuration
+COPY nginx.conf /etc/nginx/conf.d/default.conf
+
+# Expose port 80
+EXPOSE 80
+
+# Start Nginx
+CMD ["nginx", "-g", "daemon off;"]

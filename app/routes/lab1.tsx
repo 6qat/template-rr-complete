@@ -6,13 +6,21 @@ import { useIsSSR } from 'react-aria';
 
 // https://reactrouter.com/how-to/file-route-conventions
 
-export async function clientLoader({ request }: Route.ClientLoaderArgs) {
+export async function clientLoader({
+  request,
+  params,
+}: Route.ClientLoaderArgs) {
   // const _serverData = await serverLoader();
+  console.log(request, params);
   return { message: 'Hello, world! (CLIENT LOADER)' };
 }
 
-export async function clientAction({ request }: Route.ClientActionArgs) {
+export async function clientAction({
+  request,
+  params,
+}: Route.ClientActionArgs) {
   // const _serverData = await serverAction();
+  console.log(request, params);
   await new Promise((resolve) => setTimeout(resolve, 1500));
   return { message: 'Hello, world! (CLIENT ACTION)' };
 }
