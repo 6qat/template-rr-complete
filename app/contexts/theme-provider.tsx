@@ -1,4 +1,3 @@
-import * as React from 'react';
 import {
   ThemeProvider as NextThemeProvider,
   useTheme as useNextTheme,

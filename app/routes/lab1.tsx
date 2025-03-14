@@ -5,26 +5,14 @@ import { useTheme } from '~/contexts/theme-provider';
 import { useIsSSR } from 'react-aria';
 // https://reactrouter.com/how-to/file-route-conventions
 
-export async function loader({ params }: Route.LoaderArgs) {
-  // console.log(params);
-  return { message: 'Hello, world!' };
-}
-
 export async function clientLoader({ serverLoader }: Route.ClientLoaderArgs) {
-  const _serverData = await serverLoader();
-  const data = {};
-  return data;
-}
-
-export async function action({ params }: Route.ActionArgs) {
-  // console.log(params);
-  return { message: 'Hello, world!' };
+  // const _serverData = await serverLoader();
+  return { message: 'Hello, world! (CLIENT LOADER)' };
 }
 
 export async function clientAction({ serverAction }: Route.ClientActionArgs) {
-  const _serverData = await serverAction();
-  const data = {};
-  return data;
+  // const _serverData = await serverAction();
+  return { message: 'Hello, world! (CLIENT ACTION)' };
 }
 
 export default function Lab1({

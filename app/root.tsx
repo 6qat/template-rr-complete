@@ -1,4 +1,3 @@
-import React from 'react';
 import type { Route } from './+types/root';
 import { Links, Meta, Outlet, Scripts, ScrollRestoration } from 'react-router';
 
@@ -31,9 +30,11 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <Links />
       </head>
       <body>
-        {children}
-        <ScrollRestoration />
-        <Scripts />
+        <Providers>
+          {children}
+          <ScrollRestoration />
+          <Scripts />
+        </Providers>
       </body>
     </html>
   );
@@ -41,18 +42,16 @@ export function Layout({ children }: { children: React.ReactNode }) {
 
 export default function App() {
   return (
-    <Providers>
-      <SidebarProvider>
-        <AppSidebar collapsible='dock' side='left' />
-        <SidebarInset>
-          <AppSidebarNav />
-          <div className='p-4 lg:p-6'>
-            <Heading>Basic</Heading>
-            <Outlet />
-          </div>
-        </SidebarInset>
-      </SidebarProvider>
-    </Providers>
+    <SidebarProvider>
+      <AppSidebar collapsible='dock' side='left' />
+      <SidebarInset>
+        <AppSidebarNav />
+        <div className='p-4 lg:p-6'>
+          <Heading>Basic</Heading>
+          <Outlet />
+        </div>
+      </SidebarInset>
+    </SidebarProvider>
   );
 }
 

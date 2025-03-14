@@ -187,6 +187,7 @@ const ChatComponent = ({ url }: { url: string }) => {
     addMessageListener,
     removeMessageListener,
   } = useWebSocket(url);
+
   const [messages, setMessages] = useState<string[]>([]);
 
   useEffect(() => {
