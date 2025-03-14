@@ -6,7 +6,7 @@ import { useIsSSR } from 'react-aria';
 // https://reactrouter.com/how-to/file-route-conventions
 
 export async function loader({ params }: Route.LoaderArgs) {
-  console.log(params);
+  // console.log(params);
   return { message: 'Hello, world!' };
 }
 
@@ -17,7 +17,7 @@ export async function clientLoader({ serverLoader }: Route.ClientLoaderArgs) {
 }
 
 export async function action({ params }: Route.ActionArgs) {
-  console.log(params);
+  // console.log(params);
   return { message: 'Hello, world!' };
 }
 

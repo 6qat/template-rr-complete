@@ -31,17 +31,13 @@ interface WebSocketProviderProps {
 }
 
 // WebSocket Provider component
-export const WebSocketProvider: React.FC<WebSocketProviderProps> = ({
+export const WebSocketProvider = ({
   url,
   children,
-}) => {
-  // Ref to hold the WebSocket instance
+}: WebSocketProviderProps) => {
   const wsRef = useRef<WebSocket | null>(null);
-  // Ref to hold the list of message listeners
   const messageListenersRef = useRef<((message: string) => void)[]>([]);
-  // State for connection status
   const [isConnected, setIsConnected] = useState(false);
-
   const [errorMessage, setErrorMessage] = useState<string>('');
 
   // Stable function to add a message listener
