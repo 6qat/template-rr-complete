@@ -8,7 +8,7 @@ dist/
 node_modules/
 
 # UI Components (as requested)
-app/components/ui/
+app/components/ui/justd
 
 # Misc
 .DS_Store
