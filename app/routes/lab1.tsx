@@ -1,6 +1,6 @@
 import { Form, Outlet, useNavigation } from 'react-router';
 import type { Route } from './+types/lab1';
-import { Button } from '~/components/ui';
+import { Button } from '~/components/ui/justd';
 import { useTheme } from '~/contexts/theme-provider';
 import { useIsSSR } from 'react-aria';
 

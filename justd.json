@@ -1,5 +1,5 @@
 {
-  "ui": "app\\components\\ui",
+  "ui": "app\\components\\ui\\justd",
   "utils": "app/utils",
   "gray": "zinc",
   "css": "app/app.css",

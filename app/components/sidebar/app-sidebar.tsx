@@ -44,7 +44,7 @@ import {
   SidebarSection,
   SidebarSectionGroup,
   SidebarSeparator,
-} from '~/components/ui';
+} from '~/components/ui/justd';
 
 export default function AppSidebar(
   props: React.ComponentProps<typeof Sidebar>

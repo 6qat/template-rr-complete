@@ -5,7 +5,7 @@ import {
   Separator,
   SidebarNav,
   SidebarTrigger,
-} from '~/components/ui';
+} from '~/components/ui/justd';
 
 import {
   IconCommandRegular,

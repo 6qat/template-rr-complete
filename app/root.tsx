@@ -3,7 +3,7 @@ import { Links, Meta, Outlet, Scripts, ScrollRestoration } from 'react-router';
 
 import './app.css';
 import { Providers } from '~/contexts';
-import { Heading, SidebarProvider, SidebarInset } from '~/components/ui';
+import { Heading, SidebarProvider, SidebarInset } from '~/components/ui/justd';
 import AppSidebar from '~/components/sidebar/app-sidebar';
 import AppSidebarNav from '~/components/sidebar/app-sidebar-nav';
 

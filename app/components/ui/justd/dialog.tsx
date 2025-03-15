@@ -9,7 +9,7 @@ import {
   Text,
 } from "react-aria-components"
 
-import { composeTailwindRenderProps } from "~/components/ui/primitive"
+import { composeTailwindRenderProps } from "~/components/ui/justd/primitive"
 import { useMediaQuery } from "~/utils/use-media-query"
 import { twJoin, twMerge } from "tailwind-merge"
 import { Button, type ButtonProps } from "./button"
