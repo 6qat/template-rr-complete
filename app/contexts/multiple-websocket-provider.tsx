@@ -64,7 +64,9 @@ export const WebSocketProvider = ({ children }: WebSocketProviderProps) => {
 
       socket.onmessage = (event) => {
         const message = event.data;
-        messageListeners.current[url]?.forEach((listener) => listener(message));
+        for (const listener of messageListeners.current[url] || []) {
+          listener(message);
+        }
       };
 
       socket.onclose = () => {
@@ -180,6 +182,7 @@ export const useWebSocket = (url: string) => {
   );
 };
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const ChatComponent = ({ url }: { url: string }) => {
   const {
     isConnected,
@@ -204,18 +207,19 @@ const ChatComponent = ({ url }: { url: string }) => {
   }, [addMessageListener, removeMessageListener]);
 
   const handleSend = () => {
-    sendMessage('Hello from ' + url);
+    sendMessage(`Hello from ${url}`);
   };
 
   return (
     <div>
       <h3>Connection: {url}</h3>
       <p>Status: {isConnected ? 'Connected' : 'Disconnected'}</p>
-      <button onClick={handleSend} disabled={!isConnected}>
+      <button type='button' onClick={handleSend} disabled={!isConnected}>
         Send Message
       </button>
       <ul>
         {messages.map((msg, index) => (
+          // biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
           <li key={index}>{msg}</li>
         ))}
       </ul>

@@ -6,6 +6,6 @@ export default function Home({
   params,
   matches,
 }: Route.ComponentProps) {
-  // console.log(loaderData, actionData, params, matches);
+  console.log(loaderData, actionData, params, matches);
   return <div>Home</div>;
 }

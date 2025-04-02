@@ -146,6 +146,7 @@ export const useWebSocket = (): WebSocketContextType => {
   return context;
 };
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const ChatComponent = () => {
   const {
     isConnected,
