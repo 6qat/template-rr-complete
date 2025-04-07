@@ -219,7 +219,6 @@ const ChatComponent = ({ url }: { url: string }) => {
       </button>
       <ul>
         {messages.map((msg, index) => (
-          // biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
           <li key={index}>{msg}</li>
         ))}
       </ul>
