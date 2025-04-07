@@ -80,7 +80,9 @@ export const WebSocketProvider = ({
       socket.onmessage = (event) => {
         const message = event.data;
         // Call all registered listeners without updating state
-        messageListenersRef.current.forEach((listener) => listener(message));
+        for (const listener of messageListenersRef.current) {
+          listener(message);
+        }
       };
 
       socket.onclose = (event: CloseEvent) => {
@@ -180,7 +182,7 @@ const ChatComponent = () => {
     <div>
       <p>Connected: {isConnected ? 'Yes' : 'No'}</p>
       {errorMessage && <p className='text-red-500'>{errorMessage}</p>}
-      <button onClick={handleSend} disabled={!isConnected}>
+      <button type='button' onClick={handleSend} disabled={!isConnected}>
         Send Message
       </button>
       <ul>
